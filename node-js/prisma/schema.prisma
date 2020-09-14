@@ -1,4 +1,5 @@
 // Prisma DB Schema File
+// Hackersnew Clone.
 
 datasource db {
   provider = "sqlite"
