@@ -9,7 +9,7 @@ const { linkQuerys } = require('./querys')
 /**
  * GQL Resolvers
  */
-export const resolvers = {
+module.exports.resolvers = {
   // QUERYS
   Query: {
     ...linkQuerys,

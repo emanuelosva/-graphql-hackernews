@@ -7,7 +7,7 @@
  * Operations about Links
  */
 
-export const linkMutations = {
+module.exports.linkMutations = {
 
   postLink: (parent, args) => null,
 

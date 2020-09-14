@@ -6,7 +6,7 @@
 /**
  * Querys aboutn Links
  */
-export const linkQuerys = {
+module.exports.linkQuerys = {
 
   // Return app info
   info: () => 'This is the API-GRAPHQL of a Hackersnews clone',
