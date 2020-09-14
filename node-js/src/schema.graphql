@@ -27,7 +27,7 @@ type Link {
   description: String!
   url: String!
 
-  user: User
+  postedBy: User
   
   createdAt: String
   updatedAt: String
