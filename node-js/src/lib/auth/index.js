@@ -18,16 +18,16 @@ const config = require('../../config')
 module.exports.getCurrentUser = async (context) => {
   try {
     const Authorization = context.request.get('Authorization')
-    if (!Authorization) throw new Error('Not authenticated')
+    if (!Authorization) return Promise.reject(new Error('Not authenticated'))
 
     const token = Authorization.replace('Bearer ', '')
     const { userId } = jwt.verify(token, config.auth.secret)
 
     const user = await context.prisma.user.findOne({ where: { id: userId } })
-    if (!user) throw new Error('Not authenticated')
+    if (!user) return Promise.reject(new Error('Invalid credential'))
 
     return user
   } catch (error) {
-    throw new Error('Not authenticated')
+    return Promise.reject(new Error('Invalid credential'))
   }
 }
