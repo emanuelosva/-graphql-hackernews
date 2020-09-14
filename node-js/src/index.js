@@ -9,18 +9,15 @@ const { PrismaClient } = require('@prisma/client')
 const { resolvers } = require('./resolvers')
 const config = require('./config')
 
-
 /**
  * App Settings
  */
 const { port } = config.app
 
-
 /**
  * Prisma ORM instance
  */
 const prisma = new PrismaClient()
-
 
 /**
  * Server
@@ -31,11 +28,10 @@ const server = new GraphQLServer({
   context: (request) => {
     return {
       ...request,
-      prisma,
+      prisma
     }
-  },
+  }
 })
-
 
 /**
  * Server Initialization
