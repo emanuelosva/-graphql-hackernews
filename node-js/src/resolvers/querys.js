@@ -12,8 +12,13 @@ module.exports.linkQuerys = {
   info: () => 'This is the API-GRAPHQL of a Hackersnews clone',
 
   // Return all Links
-  feed: () => null,
+  feed: async (parent, args, context) => {
+    return await context.prisma.link.findMany()
+  },
 
   // Fetch a link by id
-  link: (parent, args) => null,
+  link: async (parent, args, context) => {
+    const { id } = args
+    return await context.prisma.link.findOne({ where: { id } })
+  },
 }

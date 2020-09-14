@@ -9,9 +9,26 @@
 
 module.exports.linkMutations = {
 
-  postLink: (parent, args) => null,
+  postLink: async (parent, args, context) => {
+    const { url, description } = args
+    const newLink = await context.prisma.link.create({
+      data: { url, description },
+    })
+    return newLink
+  },
 
-  updateLink: (parent, args) => null,
+  updateLink: async (parent, args, context) => {
+    const { id, url, description } = args
+    const updatedLink = await context.prisma.link.update({
+      where: { id },
+      data: { url, description },
+    })
+    return updatedLink
+  },
 
-  deleteLink: (parent, args) => null,
+  deleteLink: async (parent, args, context) => {
+    const { id } = args
+    const deletedLink = await context.prisma.link.delete({ where: { id } })
+    return deletedLink
+  },
 }
