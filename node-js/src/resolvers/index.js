@@ -2,8 +2,8 @@
  * @fileoverview Resolvers
  */
 
-const { linkMutations } = require('./mutations')
-const { linkQuerys } = require('./querys')
+const Mutations = require('./Mutation')
+const Querys = require('./Query')
 
 
 /**
@@ -12,11 +12,11 @@ const { linkQuerys } = require('./querys')
 module.exports.resolvers = {
   // QUERYS
   Query: {
-    ...linkQuerys,
+    ...Querys,
   },
 
   // MUTATIONS
   Mutation: {
-    ...linkMutations,
+    ...Mutations,
   },
 }
