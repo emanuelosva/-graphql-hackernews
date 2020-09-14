@@ -14,7 +14,7 @@ module.exports.signup = async (parent, args, context, info) => {
   const { email, password, name } = args
 
   const existingUser = await context.prisma.user.findOne({ where: { email } })
-  if (existingUser) throw new Error('Email already exists')
+  if (existingUser) return Promise.reject(new Error('Email already exists'))
 
   const hashedPassword = await bycrypt.hash(password, 10)
   const user = await context.prisma.user.create({
