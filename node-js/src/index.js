@@ -5,30 +5,12 @@
 
 const { join } = require('path')
 const { GraphQLServer } = require('graphql-yoga');
-const { linkMutations, linkQuerys } = require('./resolvers')
-
-
-/**
- *  GQL - Resolvers
- */
-
-const resolvers = {
-  // QUERYS
-  Query: {
-    ...linkQuerys,
-  },
-
-  // MUTATIONS
-  Mutation: {
-    ...linkMutations,
-  },
-}
+const { resolvers } = require('./resolvers')
 
 
 /**
  * Server
  */
-
 const server = new GraphQLServer({
   typeDefs: join(__dirname, 'schema.graphql'),
   resolvers,
@@ -38,7 +20,6 @@ const server = new GraphQLServer({
 /**
  * Server Initialization
  */
-
 server.start(() => {
   console.log(`Server running 🚀 on http://localhost:4000`)
 })
