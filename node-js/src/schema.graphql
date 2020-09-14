@@ -31,4 +31,6 @@ type Link {
   id: ID!
   description: String!
   url: String!
+  createdAt: String
+  updatedAt: String
 }
