@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "NODE_ENV=production node src/index",
+    "dev": "NODE_ENV=development nodemon src/index",
+    "lint": "standard src/** --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,5 +15,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "graphql-yoga": "^1.18.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "standard": "^14.3.4"
   }
 }
