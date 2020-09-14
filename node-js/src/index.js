@@ -5,9 +5,11 @@
 
 const { join } = require('path')
 const { GraphQLServer } = require('graphql-yoga')
-const { resolvers } = require('./resolvers')
 const { PrismaClient } = require('@prisma/client')
-const { request } = require('http')
+const { resolvers } = require('./resolvers')
+const config = require('./config')
+
+const { port } = config.app
 
 /**
  * Prisma ORM instance
@@ -31,6 +33,6 @@ const server = new GraphQLServer({
 /**
  * Server Initialization
  */
-server.start(() => {
-  console.log('Server running 🚀 on http://localhost:4000')
+server.start({ port }, () => {
+  console.log(`Server running 🚀 on http://localhost:${port}`)
 })

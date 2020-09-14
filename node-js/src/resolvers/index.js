@@ -2,21 +2,18 @@
  * @fileoverview Resolvers
  */
 
-const Mutations = require('./Mutation')
-const Querys = require('./Query')
+const Mutation = require('./Mutation')
+const Query = require('./Query')
+const User = require('./User')
+const Link = require('./Link')
 
 
 /**
  * GQL Resolvers
  */
 module.exports.resolvers = {
-  // QUERYS
-  Query: {
-    ...Querys,
-  },
-
-  // MUTATIONS
-  Mutation: {
-    ...Mutations,
-  },
+  Mutation,
+  Query,
+  User,
+  Link,
 }
