@@ -5,6 +5,7 @@
 const bycrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
+const { getCurrentUser } = require('../lib/auth')
 
 /**
  * Signup - Register a new user
@@ -44,10 +45,11 @@ module.exports.login = async (parent, args, context) => {
  * Add new Link
  */
 module.exports.postLink = async (parent, args, context) => {
+  const user = await getCurrentUser(context)
   const { url, description } = args
 
   const newLink = await context.prisma.link.create({
-    data: { url, description },
+    data: { url, description, postedBy: { connect: { id: user.id } } },
   })
   return newLink
 }
@@ -56,6 +58,9 @@ module.exports.postLink = async (parent, args, context) => {
  * Update a existing Link
  */
 module.exports.updateLink = async (parent, args, context) => {
+  // Only as a authentication middleware
+  await getCurrentUser(context)
+
   const { id, url, description } = args
 
   const updatedLink = await context.prisma.link.update({
@@ -69,6 +74,9 @@ module.exports.updateLink = async (parent, args, context) => {
  * Delete a existing Link
  */
 module.exports.deleteLink = async (parent, args, context) => {
+  // Only as a authentication middleware
+  await getCurrentUser(context)
+
   const { id } = args
 
   const deletedLink = await context.prisma.link.delete({ where: { id } })

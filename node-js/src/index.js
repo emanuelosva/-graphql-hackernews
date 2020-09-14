@@ -7,6 +7,7 @@ const { join } = require('path')
 const { GraphQLServer } = require('graphql-yoga')
 const { resolvers } = require('./resolvers')
 const { PrismaClient } = require('@prisma/client')
+const { request } = require('http')
 
 /**
  * Prisma ORM instance
@@ -19,8 +20,11 @@ const prisma = new PrismaClient()
 const server = new GraphQLServer({
   typeDefs: join(__dirname, 'schema.graphql'),
   resolvers,
-  context: {
-    prisma,
+  context: (request) => {
+    return {
+      ...request,
+      prisma,
+    }
   },
 })
 
