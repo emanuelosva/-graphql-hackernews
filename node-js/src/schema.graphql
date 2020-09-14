@@ -1,0 +1,34 @@
+# Hsckersnews clone - Schema
+
+# Available Querys
+type Query {
+  # Return the app info
+  info: String!
+
+  # Return all stored Links
+  feed: [Link!]!
+
+  # Fecth a single Link by id
+  link(id: ID!): Link
+}
+
+
+# Available Mutations
+type Mutation {
+  # Create a new Link and return the result.
+   post(url: String!, description: String!): Link!
+
+   # Update a existing Link
+   update(id: ID!, url: String, description: String): Link
+
+   # Delete a existing Link
+   delete(id: ID!): Link
+}
+
+
+# Link object
+type Link {
+  id: ID!
+  description: String!
+  url: String!
+}
