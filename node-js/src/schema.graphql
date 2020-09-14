@@ -1,6 +1,41 @@
-# Hsckersnews clone - Schema
+# -------------------
+# Hsckersnews clone
+# GraphQl Schema
+# -------------------
 
-# Available Querys
+
+# --- Schemas --- #
+
+type User {
+  # User schema
+  id: ID!
+  name: String!
+  email: String!
+
+  links: [Link]!
+}
+
+type AuthPayload {
+  # Auth response
+  token: String
+  user: User
+}
+
+type Link {
+  # Link schema
+  id: ID!
+  description: String!
+  url: String!
+
+  user: User
+  
+  createdAt: String
+  updatedAt: String
+}
+
+
+# --- Querys --- #
+
 type Query {
   # Return the app info
   info: String!
@@ -13,24 +48,17 @@ type Query {
 }
 
 
-# Available Mutations
+# --- Mutattions --- #
+
 type Mutation {
-  # Create a new Link and return the result.
-   postLink(url: String!, description: String!): Link!
 
-   # Update a existing Link
-   updateLink(id: ID!, url: String, description: String): Link
+  # --- OPERATIONS ABOUT USER --- #
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
 
-   # Delete a existing Link
-   deleteLink(id: ID!): Link
-}
-
-
-# Link object
-type Link {
-  id: ID!
-  description: String!
-  url: String!
-  createdAt: String
-  updatedAt: String
+  # --- OPERATIONS ABOUT LINK --- #
+  postLink(url: String!, description: String!): Link!
+  updateLink(id: ID!, url: String, description: String): Link
+  deleteLink(id: ID!): Link
+  
 }
