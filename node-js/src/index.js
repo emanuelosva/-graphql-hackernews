@@ -4,7 +4,7 @@
  */
 
 const { join } = require('path')
-const { GraphQLServer } = require('graphql-yoga')
+const { GraphQLServer, PubSub } = require('graphql-yoga')
 const { PrismaClient } = require('@prisma/client')
 const { resolvers } = require('./resolvers')
 const config = require('./config')
@@ -20,6 +20,11 @@ const { port } = config.app
 const prisma = new PrismaClient()
 
 /**
+ * PubSub emmiter
+ */
+const pubsub = new PubSub()
+
+/**
  * Server
  */
 const server = new GraphQLServer({
@@ -28,7 +33,8 @@ const server = new GraphQLServer({
   context: (request) => {
     return {
       ...request,
-      prisma
+      prisma,
+      pubsub
     }
   }
 })
