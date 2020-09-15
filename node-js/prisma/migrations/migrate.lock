@@ -3,3 +3,4 @@
 20200914150518-init
 20200914162748-add-user-model
 20200914184703-fix-name-relation-between-link-and-user
+20200915031429-add-vote-model
