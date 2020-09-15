@@ -30,6 +30,9 @@ INSTALLED_APPS = [
 
     # GQL by Graphene
     'graphene_django',
+
+    # Local Apps
+    'links',
 ]
 
 MIDDLEWARE = [
