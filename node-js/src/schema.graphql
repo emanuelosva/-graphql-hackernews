@@ -41,13 +41,32 @@ type Vote {
   user: User!
 }
 
+"Feed Response"
+type Feed {
+  count: Int!
+  links: [Link!]!
+}
+
+"Sort Feed Input"
+input LinkOrderByInput {
+  description: Sort
+  url: Sort
+  createdAt: Sort
+}
+
+"Sort Options"
+enum Sort {
+  asc
+  desc
+}
+
 
 # --- Querys --- #
 
 type Query {
 
   "Return filter links, paginateds or all"
-  feed(filter: String, skip: Int, take: Int): [Link!]!
+  feed(filter: String, skip: Int, take: Int, orderBy: LinkOrderByInput): Feed!
 
   "Fecth a single Link by id"
   link(id: ID!): Link

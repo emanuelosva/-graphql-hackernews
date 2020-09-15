@@ -9,7 +9,7 @@
  * Return all Links stored
  */
 module.exports.feed = async (parent, args, context) => {
-  const { filter, skip, take } = args
+  const { filter, skip, take, orderBy } = args
 
   const filterObject = filter
     ? {
@@ -20,11 +20,18 @@ module.exports.feed = async (parent, args, context) => {
     }
     : {}
 
-  return await context.prisma.link.findMany({
+  const links = await context.prisma.link.findMany({
     where: filterObject,
     skip,
     take,
+    orderBy,
   })
+  const count = await context.prisma.link.count({ where: filterObject })
+
+  return {
+    count,
+    links,
+  }
 }
 
 /**
