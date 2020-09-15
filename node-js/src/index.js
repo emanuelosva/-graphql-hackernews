@@ -33,6 +33,7 @@ const server = new GraphQLServer({
   typeDefs: join(__dirname, 'schema.graphql'),
   resolvers,
   context: (request) => {
+    // This info is accessible for all resolvers
     return {
       ...request,
       prisma,
