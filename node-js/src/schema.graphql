@@ -38,7 +38,7 @@ type Link {
 type Vote {
   id: ID!
   link: Link!
-  user: USER!
+  user: User!
 }
 
 
@@ -92,4 +92,6 @@ type Subscription {
   newLink: Link
   "On removed link"
   removeLink: Link
+  "On new Vote"
+  newVote: Vote
 }
