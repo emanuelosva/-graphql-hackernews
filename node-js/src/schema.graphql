@@ -70,3 +70,13 @@ type Mutation {
   deleteLink(id: ID!): Link
 
 }
+
+
+# --- Subscription --- #
+
+type Subscription {
+
+  newLink: Link
+
+  removeLink: Link
+}
