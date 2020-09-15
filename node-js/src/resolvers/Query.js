@@ -7,7 +7,16 @@
  * Return all Links stored
  */
 module.exports.feed = async (parent, args, context) => {
-  return await context.prisma.link.findMany()
+  const filter = args.filter
+    ? {
+      OR: [
+        { description: { contains: args.filter } },
+        { url: { contains: args.filter } },
+      ],
+    }
+    : {}
+
+  return await context.prisma.link.findMany({ where: filter })
 }
 
 /**
