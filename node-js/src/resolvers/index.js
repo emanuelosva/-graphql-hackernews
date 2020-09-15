@@ -6,6 +6,7 @@ const Mutation = require('./Mutation')
 const Query = require('./Query')
 const User = require('./User')
 const Link = require('./Link')
+const Vote = require('./Vote')
 const Subscription = require('./Subscription')
 
 
@@ -17,5 +18,6 @@ module.exports.resolvers = {
   Query,
   User,
   Link,
+  Vote,
   Subscription,
 }
