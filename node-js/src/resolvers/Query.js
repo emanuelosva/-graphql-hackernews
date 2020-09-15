@@ -11,7 +11,7 @@
 module.exports.feed = async (parent, args, context) => {
   const { filter, skip, take } = args
 
-  const filterString = filter
+  const filterObject = filter
     ? {
       OR: [
         { description: { contains: filter } },
@@ -21,7 +21,7 @@ module.exports.feed = async (parent, args, context) => {
     : {}
 
   return await context.prisma.link.findMany({
-    where: filterString,
+    where: filterObject,
     skip,
     take,
   })
