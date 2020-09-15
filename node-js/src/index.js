@@ -42,7 +42,7 @@ const server = new GraphQLServer({
     }
   },
   // Aply middleware in same order that list index
-  middlewares: [requestLogger],
+  middlewares: [requestLogger]
 })
 
 /**
