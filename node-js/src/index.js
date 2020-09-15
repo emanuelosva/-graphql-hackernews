@@ -41,6 +41,7 @@ const server = new GraphQLServer({
       pubsub
     }
   },
+  // Aply middleware in same order that list index
   middlewares: [requestLogger],
 })
 
