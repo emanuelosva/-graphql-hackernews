@@ -1,4 +1,3 @@
-const chalk = require('chalk')
 /**
  * ********************************************
  * @fileoverview Request Logger middleware
