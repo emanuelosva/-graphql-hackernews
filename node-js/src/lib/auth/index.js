@@ -1,5 +1,7 @@
 /**
+ **************************
  * @fileoverview Auth tools
+ **************************
  */
 
 const jwt = require('jsonwebtoken')

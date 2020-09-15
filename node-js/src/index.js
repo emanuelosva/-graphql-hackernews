@@ -1,6 +1,8 @@
 /**
+ ******************************************************
  * @fileoverview App Entrypoint Server
  * @description Based on minicourse - HowToGraphQl Node
+ ******************************************************
  */
 
 const { join } = require('path')
