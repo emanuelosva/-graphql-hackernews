@@ -19,12 +19,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Django Apps
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # GQL by Graphene
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
@@ -102,3 +107,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
+
+
+# GraphQL Schema
+
+GRAPHENE = {
+    'SCHEMA': 'hackernews.schema.schema',
+}
