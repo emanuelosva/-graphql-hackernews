@@ -88,3 +88,32 @@ module.exports.deleteLink = async (parent, args, context) => {
   context.pubsub.publish(pubsubEvents.removeLink, deletedLink)
   return deletedLink
 }
+
+/**
+ * Add a vote to a Link
+ */
+module.exports.vote = async (parent, args, context) => {
+  const user = await getCurrentUser(context)
+
+  const { linkId } = args
+  const userId = user.id
+
+  const voteExists = await context.prisma.vote.findOne({
+    where: { linkId_userId: { linkId, userId } }
+  })
+
+  if (Boolean(voteExists)) {
+    return Promise.reject(new Error(`Already voting for link: ${linkId}`))
+  }
+
+  const newVote = await context.prisma.vote.create({
+    data: {
+      user: { connect: { id: userId } },
+      link: { connect: { id: linkId } },
+    }
+  })
+
+  // Emit vote event
+  context.pubsub.publish(pubsubEvents.newVote, newVote)
+  return newVote
+}
