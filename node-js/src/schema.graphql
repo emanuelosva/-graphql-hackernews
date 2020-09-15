@@ -6,8 +6,8 @@
 
 # --- Schemas --- #
 
+"User schema"
 type User {
-  # User schema
   id: ID!
   name: String!
   email: String!
@@ -15,14 +15,14 @@ type User {
   links: [Link!]!
 }
 
+"Auth response"
 type AuthPayload {
-  # Auth response
   token: String
   user: User
 }
 
+"Link schema"
 type Link {
-  # Link schema
   id: ID!
   description: String!
   url: String!
@@ -33,18 +33,22 @@ type Link {
   updatedAt: String
 }
 
+"Vote schema"
+type Vote {
+  id: ID!
+  link: Link!
+  user: USER!
+}
+
 
 # --- Querys --- #
 
 type Query {
 
-  # Return the app info
-  info: String!
-
-  # Return all stored Links
+  "Return all stored Links"
   feed: [Link!]!
 
-  # Fecth a single Link by id
+  "Fecth a single Link by id"
   link(id: ID!): Link
 
 }
@@ -56,19 +60,26 @@ type Mutation {
 
   # --- OPERATIONS ABOUT USER --- #
 
+  "Register new User"
   signup(email: String!, password: String!, name: String!): AuthPayload
-
+  "Login a user"
   login(email: String!, password: String!): AuthPayload
 
 
   # --- OPERATIONS ABOUT LINK --- #
 
+  "Create new Link"
   postLink(url: String!, description: String!): Link!
-
+  "Update existing Link"
   updateLink(id: ID!, url: String, description: String): Link
-
+  "Delete existing Link"
   deleteLink(id: ID!): Link
 
+
+  # --- OPERATIONS ABOUT LINK --- #
+
+  "Add a vote on Link"
+  vote(linkId: ID!): Vote
 }
 
 
@@ -76,7 +87,8 @@ type Mutation {
 
 type Subscription {
 
+  "On link creation"
   newLink: Link
-
+  "On removed link"
   removeLink: Link
 }
