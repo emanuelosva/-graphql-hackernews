@@ -9,9 +9,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security
 
+PRODUCTION = False
+
 SECRET_KEY = '3wjw62!$834h*lxgi8f(nq5p$#^i6e=$*=so!of29v4zg=fk%y'
 
-DEBUG = True
+DEBUG = not PRODUCTION
 
 ALLOWED_HOSTS = []
 
