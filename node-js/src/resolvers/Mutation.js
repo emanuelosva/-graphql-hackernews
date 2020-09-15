@@ -6,6 +6,7 @@ const bycrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
 const { getCurrentUser } = require('../lib/auth')
+const { pubsubEvents } = require('./pubSubEvents')
 
 /**
  * Signup - Register a new user
@@ -51,6 +52,9 @@ module.exports.postLink = async (parent, args, context) => {
   const newLink = await context.prisma.link.create({
     data: { url, description, postedBy: { connect: { id: user.id } } },
   })
+
+  // Emit event 
+  context.pubsub.publish(pubsubEvents.newLink, newLink)
   return newLink
 }
 
@@ -78,7 +82,9 @@ module.exports.deleteLink = async (parent, args, context) => {
   await getCurrentUser(context)
 
   const { id } = args
-
   const deletedLink = await context.prisma.link.delete({ where: { id } })
+
+  // Emit event
+  context.pubsub.publish(pubsubEvents.removeLink, deletedLink)
   return deletedLink
 }
