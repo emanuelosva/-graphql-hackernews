@@ -1,5 +1,7 @@
 /**
+ * *****************************
  * @fileoverview Query Resolvers
+ * *****************************
  */
 
 
@@ -7,16 +9,22 @@
  * Return all Links stored
  */
 module.exports.feed = async (parent, args, context) => {
-  const filter = args.filter
+  const { filter, skip, take } = args
+
+  const filterString = filter
     ? {
       OR: [
-        { description: { contains: args.filter } },
-        { url: { contains: args.filter } },
+        { description: { contains: filter } },
+        { url: { contains: filter } },
       ],
     }
     : {}
 
-  return await context.prisma.link.findMany({ where: filter })
+  return await context.prisma.link.findMany({
+    where: filterString,
+    skip,
+    take,
+  })
 }
 
 /**
