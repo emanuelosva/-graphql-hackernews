@@ -19,8 +19,7 @@ const getOpeartionColor = (operation) => {
 module.exports.requestLogger = async (resolve, parent, args, context, info) => {
 
   // Log the request info
-  const { operation } = info
-  const { fieldName } = info
+  const { operation, fieldName } = info
 
   const typeOperation = getOpeartionColor(operation.operation)
   const name = ckalk.greenBright(fieldName)
@@ -28,5 +27,5 @@ module.exports.requestLogger = async (resolve, parent, args, context, info) => {
   debug('Request', `Type: ${typeOperation} - Name: ${name}`)
 
   // Return the resolver
-  return await await resolve(parent, args, context, info)
+  return await resolve(parent, args, context, info)
 }
