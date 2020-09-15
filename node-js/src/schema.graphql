@@ -47,7 +47,7 @@ type Vote {
 type Query {
 
   "Return all stored Links"
-  feed: [Link!]!
+  feed(filter: String): [Link!]!
 
   "Fecth a single Link by id"
   link(id: ID!): Link
