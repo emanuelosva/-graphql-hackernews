@@ -9,6 +9,7 @@ const { join } = require('path')
 const { GraphQLServer, PubSub } = require('graphql-yoga')
 const { PrismaClient } = require('@prisma/client')
 const { resolvers } = require('./resolvers')
+const { requestLogger } = require('./middleware')
 const config = require('./config')
 
 /**
@@ -39,7 +40,8 @@ const server = new GraphQLServer({
       prisma,
       pubsub
     }
-  }
+  },
+  middlewares: [requestLogger],
 })
 
 /**
