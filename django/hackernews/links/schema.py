@@ -6,7 +6,8 @@ import graphene
 from graphene_django import DjangoObjectType
 from django.forms.models import model_to_dict
 
-from .models import Link
+from users.schema import UserType
+from .models import Link, Vote
 
 
 # *******************************
@@ -28,6 +29,20 @@ class LinkType(DjangoObjectType):
         model = Link
 
 
+class VoteType(DjangoObjectType):
+    """
+    Vote type.
+
+    type Vote {
+        user: User!
+        link: Link!
+    }
+    """
+
+    class Meta:
+        model = Vote
+
+
 # *******************************
 #             QUERYS            *
 # *******************************
@@ -37,12 +52,19 @@ class Query(graphene.ObjectType):
     Querys definitions. gql -> type Query { ... }
     """
     links = graphene.List(LinkType)
+    votes = graphene.List(VoteType)
 
-    def resolve_links(self, info, **kwargs):
+    def resolve_links(self, info):
         """
         Resolver for `links` query.
         """
         return Link.objects.all()
+
+    def resolve_votes(self, info):
+        """
+        Resolver for `votes` query.
+        """
+        return Vote.objects.all()
 
 
 # *******************************
@@ -67,7 +89,8 @@ class CreateLink(graphene.Mutation):
         """
         Mutation resolver
         """
-        new_link = Link(url=url, description=description)
+        user = info.context.user or None
+        new_link = Link(url=url, description=description, posted_by=user)
         new_link.save()
 
         return CreateLink(link=new_link)
@@ -124,10 +147,46 @@ class DeleteLink(graphene.Mutation):
         return DeleteLink(link=link)
 
 
+class CreateVote(graphene.Mutation):
+    """
+    Mutation for add a vote to a Link.
+    gql -> type Mutation { createVote(...): Vote! }
+    """
+    user = graphene.Field(UserType)
+    link = graphene.Field(LinkType)
+
+    class Arguments:
+        """
+        Mutation arguments
+        """
+        link_id = graphene.Int(required=True)
+
+    def mutate(self, info, link_id):
+        """
+        Mutation resolver
+        """
+        user = info.context.user
+        if user.is_anonymous:
+            raise Exception('You must be logged to vote')
+
+        link = Link.objects.get(id=link_id)
+        if not link:
+            raise Exception('Invalid Link')
+
+        Vote.objects.create(user=user, link=link)
+
+        return CreateVote(user=user, link=link)
+
+
 class Mutation(graphene.ObjectType):
     """
     Mutations. gql -> type Mutation { ... }
     """
+
+    # About Link
     create_link = CreateLink.Field()
     update_link = UpdateLink.Field()
     delete_link = DeleteLink.Field()
+
+    # About Vote
+    create_vote = CreateVote.Field()

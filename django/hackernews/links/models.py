@@ -26,3 +26,18 @@ class Link(models.Model):
         To string method
         """
         return self.url
+
+
+class Vote(models.Model):
+    """
+    Vote model
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    link = models.ForeignKey(
+        'links.Link',
+        related_name='votes',
+        on_delete=models.CASCADE
+    )
