@@ -13,4 +13,11 @@ class Query(links.schema.Query, graphene.ObjectType):
     pass
 
 
-schema = graphene.Schema(query=Query)
+class Mutation(links.schema.Mutation, graphene.ObjectType):
+    """
+    Base Mutation object.
+    """
+    pass
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
