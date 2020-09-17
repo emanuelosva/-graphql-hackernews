@@ -23,7 +23,7 @@ class UserType(DjangoObjectType):
     """
     class Meta:
         """
-        Inherit types from django model
+        Inherit types from User django model
         """
         model = get_user_model()
 
