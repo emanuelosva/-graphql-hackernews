@@ -58,19 +58,31 @@ class Query(graphene.ObjectType):
     """
     Querys definitions. gql -> type Query { ... }
     """
-    links = graphene.List(LinkType, search=graphene.String())
+    links = graphene.List(
+        LinkType,
+        search=graphene.String(),
+        skip=graphene.Int(),
+        take=graphene.Int(),
+    )
     votes = graphene.List(VoteType)
 
-    def resolve_links(self, info, search=None):
+    def resolve_links(self, info, search=None, skip=None, take=None):
         """Retrieve all Links or filtered by search string."""
+        links = Link.objects.all()
+
         if search:
             _filter = (
                 Q(url__icontains=search) |
                 Q(description__icontains=search)
             )
-            return Link.objects.filter(_filter)
+            links = links.filter(_filter)
 
-        return Link.objects.all()
+        if skip:
+            links = links[skip:]
+        if take:
+            links = links[:take]
+
+        return links
 
     def resolve_votes(self, info):
         """Retrieve all stored Votes"""
