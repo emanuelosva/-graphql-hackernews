@@ -26,6 +26,9 @@ class LinkType(DjangoObjectType):
     }
     """
     class Meta:
+        """
+        Inherit types from Link django model
+        """
         model = Link
 
 
@@ -40,6 +43,9 @@ class VoteType(DjangoObjectType):
     """
 
     class Meta:
+        """
+        Inherit types from Vote django model
+        """
         model = Vote
 
 
@@ -55,15 +61,11 @@ class Query(graphene.ObjectType):
     votes = graphene.List(VoteType)
 
     def resolve_links(self, info):
-        """
-        Resolver for `links` query.
-        """
+        """Retrieve all stored Links"""
         return Link.objects.all()
 
     def resolve_votes(self, info):
-        """
-        Resolver for `votes` query.
-        """
+        """Retrieve all stored Votes"""
         return Vote.objects.all()
 
 
@@ -86,9 +88,7 @@ class CreateLink(graphene.Mutation):
         description = graphene.String(required=True)
 
     def mutate(self, info, url, description):
-        """
-        Mutation resolver
-        """
+        """Mutation resolver"""
         user = info.context.user or None
         new_link = Link(url=url, description=description, posted_by=user)
         new_link.save()
@@ -112,9 +112,7 @@ class UpdateLink(graphene.Mutation):
         description = graphene.String()
 
     def mutate(self, info, id, url=None, description=None):
-        """
-        Mutation resolver
-        """
+        """Mutation resolver"""
         link = Link.objects.get(id=id)
         if bool(url):
             link.url = url
@@ -138,9 +136,7 @@ class DeleteLink(graphene.Mutation):
         id = graphene.String(required=True)
 
     def mutate(self, info, id):
-        """
-        Mutation resolver
-        """
+        """Mutation resolver"""
         link = Link.objects.get(id=id)
         link.delete()
 
@@ -162,9 +158,7 @@ class CreateVote(graphene.Mutation):
         link_id = graphene.Int(required=True)
 
     def mutate(self, info, link_id):
-        """
-        Mutation resolver
-        """
+        """Mutation resolver"""
         user = info.context.user
         if user.is_anonymous:
             raise Exception('You must be logged to vote')
