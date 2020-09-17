@@ -5,6 +5,7 @@ GQL schema for Links
 import graphene
 from graphene_django import DjangoObjectType
 from django.forms.models import model_to_dict
+from django.db.models import Q
 
 from users.schema import UserType
 from .models import Link, Vote
@@ -57,11 +58,18 @@ class Query(graphene.ObjectType):
     """
     Querys definitions. gql -> type Query { ... }
     """
-    links = graphene.List(LinkType)
+    links = graphene.List(LinkType, search=graphene.String())
     votes = graphene.List(VoteType)
 
-    def resolve_links(self, info):
-        """Retrieve all stored Links"""
+    def resolve_links(self, info, search=None):
+        """Retrieve all Links or filtered by search string."""
+        if search:
+            _filter = (
+                Q(url__icontains=search) |
+                Q(description__icontains=search)
+            )
+            return Link.objects.filter(_filter)
+
         return Link.objects.all()
 
     def resolve_votes(self, info):
