@@ -4,16 +4,23 @@ GraphQl Schema root.
 
 import graphene
 import links.schema
+import users.schema
 
 
-class Query(links.schema.Query, graphene.ObjectType):
+class Query(
+        users.schema.Query,
+        links.schema.Query,
+        graphene.ObjectType):
     """
     Base Query object.
     """
     pass
 
 
-class Mutation(links.schema.Mutation, graphene.ObjectType):
+class Mutation(
+        users.schema.Mutation,
+        links.schema.Mutation,
+        graphene.ObjectType):
     """
     Base Mutation object.
     """
