@@ -22,6 +22,9 @@ class UserType(DjangoObjectType):
     }
     """
     class Meta:
+        """
+        Inherit types from django model
+        """
         model = get_user_model()
 
 
@@ -37,9 +40,11 @@ class Query(graphene.ObjectType):
     me = graphene.Field(UserType)
 
     def resolve_users(self, info):
+        """Retrieve all users"""
         return get_user_model().objects.all()
 
     def resolve_me(self, info):
+        """Retrieve the current logged user"""
         user = info.context.user
         if user.is_anonymous:
             raise Exception('Not Logged in!')
@@ -67,9 +72,7 @@ class CreateUser(graphene.Mutation):
         password = graphene.String(required=True)
 
     def mutate(self, info, username, email, password):
-        """
-        Mutation resolver
-        """
+        """Mutation resolver"""
         user = get_user_model()(
             username=username,
             email=email,
