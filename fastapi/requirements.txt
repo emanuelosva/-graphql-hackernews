@@ -1,0 +1,10 @@
+# If uses postgres
+# install asyncpg
+aiosqlite==0.15.0
+bcrypt==3.2.0
+fastapi==0.61.1
+graphene==2.1.8
+graphene-pydantic==0.1.0
+passlib==1.7.2
+pydantic==1.6
+tortoise-orm==0.16.16
