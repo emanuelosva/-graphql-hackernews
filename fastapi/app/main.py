@@ -14,7 +14,7 @@ from core.schema import schema
 #         App Server        #
 #############################
 
-app = FastAPI()
+app = FastAPI(title="HackerNews Clone GQL")
 
 # Add the GQL App server in root url
 app.add_route("/", GraphQLApp(
@@ -32,7 +32,10 @@ register_tortoise(
     app,
     db_url="sqlite://db.sqlite3",
     modules={
-        "models": ["users.models"]
+        "models": [
+            "users.models",
+            "links.models",
+        ]
     },
     generate_schemas=True,
     add_exception_handlers=True,
