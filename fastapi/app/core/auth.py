@@ -28,13 +28,6 @@ class Security:
     Class for manage security tasks.
     """
 
-    def raise_unauthorized_exception(self) -> None:
-        """
-        Raise a aunauthorized exception and interrump
-        the request process.
-        """
-        raise Exception("Unauthorized")
-
     def raise_invalid_credentials_exception(self) -> None:
         """
         Raise a aunauthorized exception and interrump
@@ -68,7 +61,7 @@ class Security:
         if not token:
             self.raise_invalid_credentials_exception()
         if token.startswith("Bearer"):
-            token = token.split(" ")[0]
+            token = token.split(" ")[1]
 
         try:
             payload: dict = jwt.decode(
