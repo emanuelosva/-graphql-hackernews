@@ -5,7 +5,6 @@ This is collection three projects. All projects implements the same backend func
 
 - Javascript:
   - **Node JS - Express + GraphQl (graphql-yoga) + Prisma** (Schema First)
-  - **Nexus JS + Prisma** (Code First)
 
 - Python:
   - **Python - Django + GraphQl (Graphene-Django) + DjangoORM** (Code First)
