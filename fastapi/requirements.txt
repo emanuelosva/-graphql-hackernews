@@ -7,6 +7,8 @@ graphene==2.1.8
 graphene-pydantic==0.1.0
 passlib==1.7.2
 pydantic==1.6
+python-dotenv==0.14.0
+python-jose==3.2.0
 tortoise-orm==0.16.16
 uvicorn==0.11.8
 uvloop==0.14.0
