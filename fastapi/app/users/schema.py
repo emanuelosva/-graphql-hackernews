@@ -41,10 +41,16 @@ class Query(graphene.ObjectType):
     Users querys.
     """
     users = graphene.List(UserType)
+    me = graphene.Field(UserType)
 
     async def resolve_users(self, info):
         """Retrieve all users."""
         return await User.all()
+
+    async def resolve_me(self, info):
+        """Return the current user."""
+        user = await security.get_current_user(info)
+        return user
 
 
 # *******************************
