@@ -6,26 +6,14 @@
 
 const { ApolloServer } = require('apollo-server')
 const { createContext } = require('./context')
+const { schema } = require('./schema')
 
 /**
  * GraphQl server.
  */
 const server = new ApolloServer({
-  typeDefs: `type Book {
-    title: String
-    author: String
-  }
-
-  type Query {
-    books: [Book]
-  }
-  `,
-  resolvers: {
-    Query: {
-      books: () => 'hello'
-    }
-  },
-  context: createContext,
+  schema,
+  context: createContext
 })
 
 /**
