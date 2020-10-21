@@ -7,7 +7,6 @@
 const jwt = require('jsonwebtoken')
 const { PrismaClient } = require('@prisma/client')
 
-
 module.exports.getToken = async ({ email }) => jwt.sign({ email }, 'secret')
 
 module.exports.getAuthUser = async (token) => {
