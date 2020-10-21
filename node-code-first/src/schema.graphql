@@ -2,6 +2,7 @@
 ### Do not make changes to this file directly
 
 
+"""Special response on auth GQL actions (signup & login)"""
 type AuthResponse {
   """Encode JWT for authentication"""
   token: String!
@@ -19,13 +20,14 @@ type Mutation {
 }
 
 type Query {
-  """Return the user that matches the passed id"""
-  getCurrentUSer(id: String!): User
+  """Return the current logged user."""
+  currentUser: User
 
-  """Return the user that matches the passed id"""
-  getUser(id: String!): User
+  """Return the user that matches the passed id."""
+  user(id: String!): User
 }
 
+"""The user entitie"""
 type User {
   """User email address"""
   email: String!

@@ -9,15 +9,15 @@ const { makeSchema } = require('@nexus/schema')
 const { userTypes, userQuery, userMutation } = require('./user')
 
 const Types = {
-  ...userTypes,
+  ...userTypes
 }
 
 const Query = {
-  ...userQuery,
+  ...userQuery
 }
 
 const Mutation = {
-  ...userMutation,
+  ...userMutation
 }
 
 module.exports.schema = makeSchema({

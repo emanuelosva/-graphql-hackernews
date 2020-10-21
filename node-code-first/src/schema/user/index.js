@@ -11,5 +11,5 @@ const userMutation = require('./mutation')
 module.exports = {
   userTypes,
   userQuery,
-  userMutation,
+  userMutation
 }
