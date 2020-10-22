@@ -7,17 +7,21 @@
 const { join } = require('path')
 const { makeSchema } = require('@nexus/schema')
 const { userTypes, userQuery, userMutation } = require('./user')
+const { linkTypes, linkQuery, linkMutation } = require('./link')
 
 const Types = {
-  ...userTypes
+  ...userTypes,
+  ...linkTypes
 }
 
 const Query = {
-  ...userQuery
+  ...userQuery,
+  ...linkQuery
 }
 
 const Mutation = {
-  ...userMutation
+  ...userMutation,
+  ...linkMutation
 }
 
 module.exports.schema = makeSchema({

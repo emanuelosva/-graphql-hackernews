@@ -39,16 +39,16 @@ module.exports.Link = objectType({
     t.field('postedBy', {
       type: 'User',
       nullable: true,
-      resolve(root, args, ctx) {
-        return ctx.prisma.link.findOne({ where: { id: root.id } }).postedBy()
+      resolve(parent, args, ctx) {
+        return ctx.prisma.link.findOne({ where: { id: parent.id } }).postedBy()
       }
     })
 
     t.list.field('votes', {
       type: 'Vote',
-      nullable: true,
-      resolve(root, args, ctx) {
-        return ctx.prisma.link.findOne({ where: { id: root.id } }).votes()
+      nullable: false,
+      resolve(parent, args, ctx) {
+        return ctx.prisma.link.findOne({ where: { id: parent.id } }).votes()
       }
     })
   }
@@ -65,6 +65,7 @@ module.exports.Feed = objectType({
     })
 
     t.list.field('links', {
+      type: 'Link',
       nullable: false,
       description: 'User links'
     })
@@ -76,14 +77,22 @@ module.exports.Vote = objectType({
   description: 'Represent a vote for some link',
   definition(t) {
 
-    t.field('link', {
+    t.field('Link', {
+      type: 'Link',
       nullable: false,
-      description: 'The voted link'
+      description: 'The voted link',
+      async resolve(parent, args, ctx) {
+        return ctx.prisma.vote.findOne({ where: { id: parent.id } }).link()
+      }
     })
 
     t.field('user', {
+      type: 'User',
       nullable: false,
-      description: 'The user that emit a vote'
+      description: 'The user that emit a vote',
+      async resolve(parent, args, ctx) {
+        return ctx.prisma.vote.findOne({ where: { id: parent.id } }).user()
+      }
     })
   }
 })

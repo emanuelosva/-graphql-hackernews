@@ -11,20 +11,85 @@ type AuthResponse {
   user: User!
 }
 
+"""Feed response info"""
+type Feed {
+  """Link count"""
+  count: Int!
+
+  """User links"""
+  links: [Link]!
+}
+
+"""Sample input for order feed"""
+input inputOrderBy {
+  """Order by creation?"""
+  createdAt: Sort
+
+  """Order by description?"""
+  description: Sort
+
+  """Order by url?"""
+  url: Sort
+}
+
+"""The linkt to some rosource shared to comunity"""
+type Link {
+  """Link creation date"""
+  createdAt: String
+
+  """Link description"""
+  description: String!
+
+  """Link pk"""
+  id: ID!
+  postedBy: User
+
+  """Link update date"""
+  updatedAt: String
+
+  """Url to the shared link"""
+  url: String!
+  votes: [Vote]!
+}
+
 type Mutation {
+  """Emit a new vote for a specific link"""
+  addVote(linkId: ID!): Vote
+
+  """Delete a existing link"""
+  deleteLink(id: ID!): Link!
+
   """Verify user credentials and return access token"""
   login(email: String!, password: String!): AuthResponse
 
+  """Create a new link to share."""
+  postLink(description: String!, url: String!): Link!
+
   """Register a new user and return access token"""
   signup(email: String!, name: String!, password: String!): AuthResponse
+
+  """Update a existing link"""
+  updateLink(description: String, id: ID!, url: String): Link!
 }
 
 type Query {
   """Return the current logged user."""
   currentUser: User
 
+  """Return the last posted links"""
+  feed(filter: String, orderBy: inputOrderBy, skip: Int, take: Int): Feed!
+
+  """Retrieve a specific link"""
+  link(id: ID!): Link!
+
   """Return the user that matches the passed id."""
   user(id: String!): User
+}
+
+"""Valid sort key words"""
+enum Sort {
+  asc
+  desc
 }
 
 """The user entitie"""
@@ -35,6 +100,18 @@ type User {
   """User pk"""
   id: ID!
 
+  """User posted links"""
+  links: [Link]!
+
   """User full name"""
   name: String!
+}
+
+"""Represent a vote for some link"""
+type Vote {
+  """The voted link"""
+  Link: Link!
+
+  """The user that emit a vote"""
+  user: User!
 }
